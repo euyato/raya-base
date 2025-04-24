@@ -1,0 +1,25 @@
+{
+  "name": "raya-base",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "sh start.sh"
+  },
+  "author": "YatoMods",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.5.0",
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "qrcode-terminal": "^0.12.0",
+    "pino": "^7.11.0",
+    "chalk": "^4.1.2",
+    "performance-now": "^2.1.0",
+    "awesome-phonenumber": "^5.9.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs": "^0.0.1-security",
+    "jsdom": "^16.4.0",
+    "@bochilteam/scraper": "^4.2.4",
+    "node-fetch": "^2.6.1",
+    "axios": "^0.24.0"
+  }
+}
