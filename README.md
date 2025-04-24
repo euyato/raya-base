@@ -38,7 +38,7 @@ Espere carregar tudo
 ## Acessando e iniciando a base
 **4° Comando**
 ```
-cd angel-base && npm start
+cd raya-base && npm start
 ```
 
 ## 🖲️ STARTS DA BASE 🖲
