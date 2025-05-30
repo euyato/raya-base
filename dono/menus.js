@@ -7,7 +7,15 @@ return `╭─⟢
 │ 🛠️ Versão: 1.5.0
 ╰─────────────⟡
 
-╭─⟢ 🛡️ *ADMINISTRATIVO*
+╭─⟢ 🛡️ *ADMINS - DONO*
+│ ⚙️ ${prefixo}prefixo-bot
+│ ➥ Alterar o prefixo
+│ ⚙️ ${prefixo}nome-bot
+│ ➥ Alterar o nome do robo
+│ ⚙️ ${prefixo}nick-dono
+│ ➥ Alterar o nome do dono
+│ ⚙️ ${prefixo}numero-dono
+│ ➥ Alterar o numero dono
 │ 🎀 ${prefixo}add 558899..
 │ ➥ Adiciona um novo membro
 │ 🔒 ${prefixo}banir @usuário
