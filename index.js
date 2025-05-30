@@ -29,7 +29,7 @@ const NodeCache = require("node-cache")
 const { menu } = require('./dono/menus.js')
 const { msg18, msg, msgApi, consoleVerde, consoleVerde2, consoleVermelho, consoleVermelho2, consoleAmarelo, consoleAmarelo2, consoleAzul, consoleAzul2, consoleErro, consoleAviso, consoleOnline, consoleSucesso, fetchJson, getBuffer, timed, data, hora, selo, seloMeta, getFileBuffer, seloGpt, seloLuzia, seloLaura, seloCopilot } = require('./dono/functions.js')
 
-const { prefixo, botName, API_KEY_NEXUS, donoName, NumeroDono, fotomenu } = require('./dono/settings.json')
+const { prefixo, botName, API_NODZ, donoName, NumeroDono, fotomenu } = require('./dono/settings.json')
 
 // INÍCIO DA CONEXAO //
 async function iniciarbot() {
@@ -370,7 +370,7 @@ reagir(from, '⚡️')
 r = (Date.now() / 1000) - info.messageTimestamp
 uptime = process.uptime()
 var ping = `${tempo}, Usuário: ${sender.split("@")[0]}\n\n🖥 *Sistema operacional:* ${infoSystem.type()}\n⚙️ *Versão:* ${infoSystem.release()}\n⏰️ *Horario atual:* ${hora}\n📆 *Data atual:* ${data}\n🤖 *Tempo online:* ${kyun(uptime)}\n📊 *Comandos totais:* ${totalcmds}\n🗂 *Memoria ram total:* ${(infoSystem.totalmem()/Math.pow(1024, 3)).toFixed(2)} GB\n🗂 *Memoria ram livre:* ${(infoSystem.freemem()/Math.pow(1024, 3)).toFixed(2)} GB`
-await sock.sendMessage(from, { image: { url: `https://nexus-api.shop/api/ping?fundo=https://files.catbox.moe/lz9h73.jpeg&text1=RAYA%20BOT&text2=${String(r.toFixed(3))}&text3=%3E%3E%20SPEED%20BOT%20%3C%3C&avatar=https://files.catbox.moe/o7dtdq.jpeg` }, caption: ping}, {quoted: info})
+await sock.sendMessage(from, { image: { url: `https://api.popcat.xyz/welcomecard?background=https://files.catbox.moe/wi9c2t.jpeg&text1=RAYA%20BOT&text2=${String(r.toFixed(3))}&text3=%3E%3E%20SPEED%20BOT%20%3C%3C&avatar=https://files.catbox.moe/dxmnzl.jpeg` }, caption: ping}, {quoted: info})
 }
 break
 
@@ -526,196 +526,181 @@ enviar(`❌ Erro, tente mais tarde`);
 })
 break
 
-case 'play':
-if(!q) return enviar(`Olá ${pushname}, Você  esqueceu do nome da música Ex: play teto`)
+case 'play_audio':
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} nome`)
 reagir(from, "🕜")
-enviar('Estou pesquisando seu audio..')
-nexus = await fetchJson(`https://nexus-api.shop/youtube/play2?query=${q}&apikey=${API_KEY_NEXUS}`)
-sock.sendMessage(from, {image: {url: `${nexus.imagem}`}, caption: `╭┈ׅ᳝ׅ𑂳໋֕𔓕᳝ׅ┉۪࣮᪲۟۫─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─ׅ͚᷂࠭━⵿໋݊┅᮫━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝࣭۟۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─໋͚ׅ۪֘┉᳝ׅ᪲𔓕໋۪࣪┈᩿࣪╮
-┆ 📝 *titulo:* ${nexus.titulo}
-「 ✦ 」 
-┆ ⌛️ *tempo:* ${nexus.tempo}
-「 ✦ 」 
-┆ 🎗 *canal:* ${nexus.canal}
-「 ✦ 」 
-┆ 🌐 *views:* ${nexus.views}
-╰┈ׅ᳝ׅ𑂳໋֕𔓕᳝ׅ┉۪࣮᪲۟۫─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟۟━໋ׅ࣪࣪─໋͚ׅ۪֘┉᳝ׅ᪲𔓕໋۪࣪┈╯`}, {quoted: info})
-sock.sendMessage(from, {audio: {url: `${nexus.audio}`}, mimetype: "audio/mpeg"}, {quoted: info})
+neon = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/youtube?query=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {image: {url: `${neon.resultado.imagem}`}, caption: `▶️ *YOUTUBE - MUSICA*
+
+🎵 *Título:* ${neon.resultado.titulo}
+⏳ *Duração:* ${neon.resultado.duracao}
+📺 *Canal:* ${neon.resultado.canal}
+👁️ *Visualizações:* ${neon.resultado.views}
+
+> ⏬ Enviando audio, aguarde..`}, {quoted: seloMeta});
+sock.sendMessage(from, {audio: {url: `https://nodz-apis.com.br/api/downloads/youtube/audio?url=${neon.resultado.url}&apiKey=${API_NODZ}`}, mimetype: "audio/mpeg"}, {quoted: info})
 break
 
-case 'playvid':
-if(!q) return enviar(`Olá ${pushname}, Você  esqueceu do nome do video Ex: ${prefix}playvid teto`)
+case 'play_video':
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} nome`)
 reagir(from, "🕜")
-nexus = await fetchJson(`https://nexus-api.shop/youtube/search?query=${q}&apikey=${API_KEY_NEXUS}`)
-enviar('Estou pesquisando seu video..')
-sock.sendMessage(from, {image: {url: `${nexus.resultado[0].image}`}, caption: `╭┈ׅ᳝ׅ𑂳໋֕𔓕᳝ׅ┉۪࣮᪲۟۫─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─ׅ͚᷂࠭━⵿໋݊┅᮫━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝࣭۟۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─໋͚ׅ۪֘┉᳝ׅ᪲𔓕໋۪࣪┈᩿࣪╮
-┆ 📝 *titulo:* ${nexus.resultado[0].title}
-「 ✦ 」
-┆ ⌛️ *tempo:* ${nexus.resultado[0].timestamp}
-「 ✦ 」
-┆ 🎗 *canal:* ${nexus.resultado[0].author.name}
-「 ✦ 」
-┆ 🌐 *views:* ${nexus.resultado[0].views}
-╰┈ׅ᳝ׅ𑂳໋֕𔓕᳝ׅ┉۪࣮᪲۟۫─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟━໋ׅ࣪࣪─ׅ͚᷂࠭━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝━⵿໋݊┅᮫࣭۫𝆬࣪࣪┅⵿᳝۟۟━໋ׅ࣪࣪─໋͚ׅ۪֘┉᳝ׅ᪲𔓕໋۪࣪┈╯`}, {quoted: info})
-sock.sendMessage(from, {video: {url: `https://nexus-api.shop/youtube/mp4?url=${nexus.resultado[0].url}&apikey=${API_KEY_NEXUS}`}, mimetype: "video/mp4"}, {quoted: info})
+neon = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/youtube?query=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {image: {url: `${neon.resultado.imagem}`}, caption: `▶️ *YOUTUBE - VIDEO*
+
+📽 *Título:* ${neon.resultado.titulo}
+⏳ *Duração:* ${neon.resultado.duracao}
+📺 *Canal:* ${neon.resultado.canal}
+👁️ *Visualizações:* ${neon.resultado.views}
+
+> ⏬ Enviando video, aguarde..`}, {quoted: seloMeta});
+sock.sendMessage(from, {video: {url: `https://nodz-apis.com.br/api/downloads/youtube/video?url=${neon.resultado.url}&apiKey=${API_NODZ}`}, mimetype: "video/mp4"}, {quoted: info})
 break
 
-case 'mp3':
-if(!q) return enviar('Cadê o link do Youtube?');
-sock.sendMessage(from, {audio: {url: `https://nexus-api.shop/youtube/mp3?url=${q}&apikey=${API_KEY_NEXUS}`}, mimetype: "audio/mpeg"}, {quoted: info})
+case 'play_doc':
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} nome`)
+reagir(from, "🕜")
+neon = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/youtube?query=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {image: {url: `${neon.resultado.imagem}`}, caption: `▶️ *YOUTUBE - DOCUMENTO*
+
+🗂️ *Título:* ${neon.resultado.titulo}
+⏳ *Duração:* ${neon.resultado.duracao}
+📺 *Canal:* ${neon.resultado.canal}
+👁️ *Visualizações:* ${neon.resultado.views}
+
+> ⏬ Enviando documento, aguarde..`}, {quoted: seloMeta});
+sock.sendMessage(from, {document: {url: `https://nodz-apis.com.br/api/downloads/youtube/video?url=${neon.resultado.url}&apiKey=${API_NODZ}`}, mimetype: "video/mp4", fileName: 'video.mp4'}, {quoted: info})
 break
 
-case 'mp4':
-if(!q) return enviar('Cadê o link do Youtube?');
-sock.sendMessage(from, {video: {url: `https://nexus-api.shop/youtube/mp4?url=${q}&apikey=${API_KEY_NEXUS}`}, mimetype: "video/mp4"}, {quoted: info})
-break
-
-case 'tiktok':
+case 'tiktok_video':
 try {
-if(!q) return enviar('Cadê o link do Tiktok?');
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} link`);
 reagir(from, "🕜")
-enviar('Estou processando seu video..')
-nexus = await fetchJson(`https://nexus-api.shop/tiktok/video?url=${q}&apikey=${API_KEY_NEXUS}`)
-await sock.sendMessage(from, {video: {url: `${nexus.video}`}, 
+enviar('Estou processando seu video.')
+data = await fetchJson(`https://nodz-apis.com.br/api/downloads/tiktok/dl?url=${q}&apiKey=${API_NODZ}`)
+await sock.sendMessage(from, {video: {url: data.resultado.play}, 
 mimetype: "video/mp4"}, {quoted: info});
 } catch (error) {
-  console.error(error);
- enviar("Deu um pequeno erro ao realizar o dowload do video")
+console.error(error);
+enviar("Ocorreu um erro, a api caiu ou verifique se o link é de um vídeo.")
+}
+break;
+
+case 'tiktok_audio':
+try {
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} link`);
+reagir(from, "🕜")
+data = await fetchJson(`https://nodz-apis.com.br/api/downloads/tiktok/dl?url=${q}&apiKey=${API_NODZ}`);
+enviar('Estou processando seu audio.')
+await sock.sendMessage(from, {audio: {url: data.resultado.music}, 
+mimetype: "audio/mpeg"}, {quoted: info});
+} catch (error) {
+console.error(error);
+enviar("Ocorreu um erro, a api caiu ou verifique se o link é de um vídeo.")
 }
 break;
 
 case 'instagram':
-if(!q) return enviar(`Você esqueceu de colocar a url Exemplo: ${prefix}instagram url`)
+if(!q) return enviar(`🔹 Uso correto: ${prefixo}instagram link`)
 reagir(from, "🕜")
 enviar('Estou processando seu video..')
-sock.sendMessage(from, {video: {url: `https://nexus-api.shop/api/instagram?url=${q}&apikey=${API_KEY_NEXUS}`}, mimetype: "video/mp4"}, {quoted: info})
+data = await fetchJson(`https://nodz-apis.com.br/api/downloads/instagram/dl?url=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {video: {url: data.resultado[0].url}, mimetype: "video/mp4"}, {quoted: info});
 break
 
 case 'kwai':
-if(!q) return enviar(`Você esqueceu de colocar a url Ex: ${prefix}kwai url`)
+if(!q) return enviar(`🔹 Uso correto: ${prefixo}kwai link`)
 reagir(from, "🕜")
 enviar('Estou processando seu video..')
-sock.sendMessage(from, {video: {url: `https://nexus-api.shop/api/kwai?url=${q}&apikey=${API_KEY_NEXUS}`}, mimetype: "video/mp4"}, {quoted: info})
+data = await fetchJson(`https://nodz-apis.com.br/api/downloads/kwai/dl?url=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {video: {url: data.resultado.video}, mimetype: "video/mp4"}, {quoted: info})
 break
 
 case 'pin': case 'pinterest':
-if(!q) return enviar(`Exemplo: ${prefix}pin Luffy`)
-reagir(from, "🕜")
+if(!q) return enviar(`🔹 Uso correto:  ${prefixo + cmd} Luffy`)
+reagir(from, "✅");
+data = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/pinterest?query=${q}&apiKey=${API_NODZ}`);
 try {
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/pinterest?q=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: data.resultado.imagens}, caption: `🎨 Sua Imagem!`}, {quoted: info})
 } catch (e) {
 enviar(`Pin Não Encontrado`)
 console.log(e)}
 break
 
-case 'pinvid':
-if(!q) return enviar(`Você esqueceu de colocar a url Exemplo: ${prefix}pinvid url`)
+case 'pin_video':
+if(!q) return enviar(`🔹 Uso correto: ${prefixo}pin_video url`)
 reagir(from, "🕜")
+data = await fetchJson(`https://nodz-apis.com.br/api/downloads/pinterest/dl?url=${q}&apiKey=${API_NODZ}`);
 enviar('Estou processando seu video..')
-sock.sendMessage(from, {video: {url: `https://nexus-api.shop/api/pinvideo?url=${q}&apikey=${API_KEY_NEXUS}`}, mimetype: "video/mp4"}, {quoted: info})
+sock.sendMessage(from, {video: {url: data.resultado.download}}, {quoted: info})
 break
 
-case 'igstalk': case 'instastalk':
-reagir(from, "🕜")
-if(!q) return enviar(`Exemplo: ${command} nome`);
-var ABC = await fetchJson(`https://nexus-api.shop/stalk/instagram?username=${q}&apikey=${API_KEY_NEXUS}`)
-var abcdx = `⚝ *USERNAME:* ${ABC.resultado.usuario}\n⚝ *NOME:* ${ABC.resultado.nome_completo}\n⚝ *BIO:* ${ABC.resultado.biografia}\n⚝ *POSTS:* ${ABC.resultado.postagens}\n⚝ *SEGUIDORES:* ${ABC.resultado.seguidores}\n⚝ *SEGUINDO:* ${ABC.resultado.seguindo}`;
-sock.sendMessage(from, {image: {url: `${ABC.resultado.foto_perfil_hd}`}, caption: abcdx}, {quoted: info})
-break;
+case 'igstalk':
+if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} usuario`)
+reagir(from, "🔎")
+stalk = await fetchJson(`https://nodz-apis.com.br/api/outras/stalk/instagram?user=${q}&apiKey=${API_NODZ}`)
+sock.sendMessage(from, {image: {url: `${stalk.resultado.fotoPerfilHD}`}, caption: `🕵🏻 RESULTADOS:
 
-case 'tiktokstalk': case 'tikstalk':
-reagir(from, "🕜")
-if(!q) return enviar(`Exemplo: ${command} nome`);
-ABC = await fetchJson(`https://nexus-api.shop/stalk/tiktok?username=${q}&apikey=${API_KEY_NEXUS}`)
-var abcdx = `⚝ *USERNAME:* ${ABC.resultado.usuario}\n⚝ *NOME:* ${ABC.resultado.apelido}\n⚝ *BIO:* ${ABC.resultado.biografia}\n⚝ *POSTS:* ${ABC.resultado.videos}\n⚝ *CURTIDAS:* ${ABC.resultado.curtidas}\n⚝ *SEGUIDORES:* ${ABC.resultado.seguidores}\n⚝ *SEGUINDO:* ${ABC.resultado.seguindo}`;
-sock.sendMessage(from, {image: {url: `${ABC.resultado.avatar}`}, caption: abcdx}, {quoted: info})
-break;
+🫅🏻 *Usuario:* ${stalk.resultado.usuario}
+💫 *Nome:* ${stalk.resultado.nomeCompleto}
+💬 *Biografia:* ${stalk.resultado.biografia}
+👥️️ *Seguidores:* ${stalk.resultado.seguidores}
+❤️‍🩹️️ *Seguindo:* ${stalk.resultado.seguindo}
+🎨 *Postagens:* ${stalk.resultado.postagens}`}, {quoted: info});
+break
 
-case 'gpt': case 'gemini':
+case 'gemini': case 'gpt':
 if(!q) return enviar(`Em quê eu posso ajudar você?`)
+reagir(from, '🧠')
 try {
-const openaxz = await fetchJson(`https://nexus-api.shop/api/gemini?q=${q}&apikey=${API_KEY_NEXUS}`)
-enviar(`${openaxz.resposta}`)
+const openan = await fetchJson(`https://nodz-apis.com.br/api/inteligencias/gemini?query=${q},%20resposta%20em%20portugues.&apiKey=${API_NODZ}`)
+enviar(`🤖: ${openan.resultado}`)
 } catch (e){
-return enviar("Resposta não encontrada..")
+return enviar("🤖: Resposta não encontrada.")
 }
-break
-
-case 'plaq':
-if(!q) return enviar(`Cadê o nick?`)
-enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
 break
 
 case 'plaq1':
 if(!q) return enviar(`Cadê o nick?`)
 enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq1?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: `https://neon-apis.shop/api/plaq1?texto=${q}`}}, {quoted: info})
 break
 
 case 'plaq2':
 if(!q) return enviar(`Cadê o nick?`)
 enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq2?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: `https://neon-apis.shop/api/plaq2?texto=${q}`}}, {quoted: info})
 break
 
 case 'plaq3':
 if(!q) return enviar(`Cadê o nick?`)
 enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq3?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: `https://neon-apis.shop/api/plaq3?texto=${q}`}}, {quoted: info})
 break
 
 case 'plaq4':
 if(!q) return enviar(`Cadê o nick?`)
 enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq4?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: `https://neon-apis.shop/api/plaq4?texto=${q}`}}, {quoted: info})
 break
 
 case 'plaq5':
 if(!q) return enviar(`Cadê o nick?`)
 enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq5?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
-break
-
-case 'plaq6':
-if(!q) return enviar(`Cadê o nick?`)
-enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq6?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
-break
-
-case 'plaq7':
-if(!q) return enviar(`Cadê o nick?`)
-enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq7?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
-break
-
-case 'plaq8':
-if(!q) return enviar(`Cadê o nick?`)
-enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/api/plaq8?texto=${q}&apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+sock.sendMessage(from, {image: {url: `https://neon-apis.shop/api/plaq5?texto=${q}`}}, {quoted: info})
 break
 
 case 'waifu':
-enviar('Estou processando..')
-sock.sendMessage(from, {image: {url: `https://nexus-api.shop/random/waifu2?apikey=${API_KEY_NEXUS}`}}, {quoted: info})
+reagir(from, "✅");
+data = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/pinterest?query=waifu&apiKey=${API_NODZ}`);
+sock.sendMessage(from, {image: {url: data.resultado.imagens}}, {quoted: info})
 break
-
-case 'metadinha':
-try {
-MET = await fetchJson(`https://nexus-api.shop/random/metadinha?apikey=${API_KEY_NEXUS}`);
-sock.sendMessage(from, {image: {url: MET.masculina}, caption: `*HOMEM*`}, {quoted: info})
-sock.sendMessage(from, {image: {url: MET.feminina}, caption: `*MULHER*`}, {quoted: info})
-} catch (e) {
-enviar(`alguma coisa deu errado.`)
-}
-break;
 
 case 'figu-random':
 if (!q) return enviar('cadê a quantidade?')
 if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 async function eitamundobon() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-comum?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, { sticker: { url: `https://neon-apis.shop/api/figu-aleatoria`} })}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundobon()
@@ -727,7 +712,7 @@ if (!q) return enviar('cadê a quantidade?')
 if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 async function eitamundoraiva() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-raiva?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-raiva`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundoraiva()
@@ -740,7 +725,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamundobcvxx() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-desenho?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, { sticker: { url: `https://neon-apis.shop/api/figu-desenho`} })}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundobcvxx()
@@ -753,7 +738,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamundoflork() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-flork?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-flork`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundoflork()
@@ -766,7 +751,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamundoroblox() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-roblox?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-roblox`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundoroblox()
@@ -779,7 +764,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitxmundobom() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-anime?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-anime`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitxmundobom()
@@ -792,7 +777,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamxndobom() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-coreana?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-coreana`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamxndobom()
@@ -805,7 +790,7 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamundoruim() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-animais?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-animais`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundoruim()
@@ -818,20 +803,20 @@ if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamunzzbom() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-engracada?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-engracada`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamunzzbom()
 }
 break
 
-case 'figu-bebe':
+case 'figu-emojis':
 if (!q) return enviar('cadê a quantidade?')
 if (!q > 10) return enviar('O limite máximo é de 10 figurinhas!');
 enviar('Enviando suas figurinhas..')
 await esperar(1000)
 async function eitamundobebe() {
-sock.sendMessage(from, { sticker: { url: `https://nexus-api.shop/sticker-bebe?apikey=${API_KEY_NEXUS}`} })}
+sock.sendMessage(from, {sticker: {url: `https://neon-apis.shop/api/figu-emoji`}})}
 for (i = 0; i < q; i++) {
 await esperar(500)
 eitamundobebe()
