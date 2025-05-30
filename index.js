@@ -31,6 +31,8 @@ const { msg18, msg, msgApi, consoleVerde, consoleVerde2, consoleVermelho, consol
 
 const { prefixo, botName, API_NODZ, donoName, NumeroDono, fotomenu } = require('./dono/settings.json')
 
+const setting = JSON.parse(fs.readFileSync('./dono/settings.json'));
+
 // INÍCIO DA CONEXAO //
 async function iniciarbot() {
 const store = makeInMemoryStore({ logger: pino().child({ level: 'debug', stream: 'store' }) });
@@ -135,6 +137,7 @@ const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 const donofc = NumeroDono+"@s.whatsapp.net"
 const IsDono = donofc.includes(sender) 
+const SoDono = IsDono
 const isGroupAdmins = groupAdmins.includes(sender) || false || IsDono
 // CONSOLE COMANDOS //
 
@@ -364,6 +367,59 @@ case 'menu':
 reagir(from, "✅️")
 await sock.sendMessage(from, {image: {url: fotomenu}, caption: menu(donoName, botName, prefixo, sender)}, {quoted: seloMeta});
 break;
+
+case 'prefixo-bot': case 'setprefix':
+if(!IsDono) return enviar('exclusivo apenas para meu dono.')
+if(!q) return enviar('cade o simbolo?')
+setting.prefixo = q
+fs.writeFileSync('./dono/settings.json', JSON.stringify(setting, null, 2))
+enviar(`O prefixo foi alterado com sucesso para: ${setting.prefixo}`)
+setTimeout(async () => {
+setTimeout(async () => {
+process.exit()
+}, 1200)
+}, 1000)
+break
+
+case 'nome-bot':
+if(!IsDono) return enviar('exclusivo apenas para meu dono.')
+if(!q) return enviar('cade o nome?')
+setting.botName = q
+fs.writeFileSync('./dono/settings.json', JSON.stringify(setting, null, 2))
+enviar(`Meu nome foi alterado com sucesso para: ${q}`)
+setTimeout(async () => {
+setTimeout(async () => {
+process.exit()
+}, 1200)
+}, 1000)
+break
+
+case 'nick-dono':
+if(!IsDono) return enviar('exclusivo apenas para meu dono.')
+if(!q) return enviar('cade o nome?')
+setting.donoName = q
+fs.writeFileSync('./dono/settings.json', JSON.stringify(setting, null, 2))
+enviar(`O nick do dono foi configurado para: ${q}`)
+setTimeout(async () => {
+setTimeout(async () => {
+process.exit()
+}, 1200)
+}, 1000)
+break
+
+case 'numero-dono':
+if(!IsDono) return enviar('exclusivo apenas para meu dono.')
+if(!q) return enviar('cade o numero?')
+if(q.match(/[a-z]/i)) return enviar("É apenas números.")
+enviar(`O número dono foi configurado com sucesso para: ${q}`)
+setting.NumeroDono = q
+fs.writeFileSync('./dono/settings.json', JSON.stringify(setting, null, 2))
+setTimeout(async () => {
+setTimeout(async () => {
+process.exit()
+}, 1200)
+}, 1000)
+break
 
 case 'ping': {
 reagir(from, '⚡️')
