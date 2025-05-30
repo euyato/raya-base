@@ -577,7 +577,7 @@ if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} link`);
 reagir(from, "🕜")
 enviar('Estou processando seu video.')
 data = await fetchJson(`https://nodz-apis.com.br/api/downloads/tiktok/dl?url=${q}&apiKey=${API_NODZ}`)
-await sock.sendMessage(from, {video: {url: data.resultado.play}, 
+await sock.sendMessage(from, {video: {url: `${data.resultado.play}`}, 
 mimetype: "video/mp4"}, {quoted: info});
 } catch (error) {
 console.error(error);
@@ -591,7 +591,7 @@ if(!q) return enviar(`🔹 Uso correto: ${prefixo + cmd} link`);
 reagir(from, "🕜")
 data = await fetchJson(`https://nodz-apis.com.br/api/downloads/tiktok/dl?url=${q}&apiKey=${API_NODZ}`);
 enviar('Estou processando seu audio.')
-await sock.sendMessage(from, {audio: {url: data.resultado.music}, 
+await sock.sendMessage(from, {audio: {url: `${data.resultado.music}`}, 
 mimetype: "audio/mpeg"}, {quoted: info});
 } catch (error) {
 console.error(error);
@@ -604,7 +604,7 @@ if(!q) return enviar(`🔹 Uso correto: ${prefixo}instagram link`)
 reagir(from, "🕜")
 enviar('Estou processando seu video..')
 data = await fetchJson(`https://nodz-apis.com.br/api/downloads/instagram/dl?url=${q}&apiKey=${API_NODZ}`)
-sock.sendMessage(from, {video: {url: data.resultado[0].url}, mimetype: "video/mp4"}, {quoted: info});
+sock.sendMessage(from, {video: {url: `${data.resultado[0].url}`}, mimetype: "video/mp4"}, {quoted: info});
 break
 
 case 'kwai':
@@ -612,15 +612,15 @@ if(!q) return enviar(`🔹 Uso correto: ${prefixo}kwai link`)
 reagir(from, "🕜")
 enviar('Estou processando seu video..')
 data = await fetchJson(`https://nodz-apis.com.br/api/downloads/kwai/dl?url=${q}&apiKey=${API_NODZ}`)
-sock.sendMessage(from, {video: {url: data.resultado.video}, mimetype: "video/mp4"}, {quoted: info})
+sock.sendMessage(from, {video: {url: `${data.resultado.video}`}, mimetype: "video/mp4"}, {quoted: info})
 break
 
 case 'pin': case 'pinterest':
 if(!q) return enviar(`🔹 Uso correto:  ${prefixo + cmd} Luffy`)
 reagir(from, "✅");
-data = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/pinterest?query=${q}&apiKey=${API_NODZ}`);
 try {
-sock.sendMessage(from, {image: {url: data.resultado.imagens}, caption: `🎨 Sua Imagem!`}, {quoted: info})
+let datn = await fetchJson(`https://nodz-apis.com.br/api/pesquisas/pinterest?query=${q}&apiKey=${API_NODZ}`);
+sock.sendMessage(from, {image: {url: `${datn.resultado.imagens}`}, caption: `🎨 Sua Imagem!`}, {quoted: info})
 } catch (e) {
 enviar(`Pin Não Encontrado`)
 console.log(e)}
@@ -631,7 +631,7 @@ if(!q) return enviar(`🔹 Uso correto: ${prefixo}pin_video url`)
 reagir(from, "🕜")
 data = await fetchJson(`https://nodz-apis.com.br/api/downloads/pinterest/dl?url=${q}&apiKey=${API_NODZ}`);
 enviar('Estou processando seu video..')
-sock.sendMessage(from, {video: {url: data.resultado.download}}, {quoted: info})
+sock.sendMessage(from, {video: {url: `${data.resultado.download}`}}, {quoted: info})
 break
 
 case 'igstalk':
