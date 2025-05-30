@@ -2,7 +2,7 @@
 
 <h1 align="center">
 <p>
-<img src= "https://files.catbox.moe/dxmnzl.jpeg" alt="RAYA BASE" width="720">
+<img src= "https://files.catbox.moe/hyogwn.png" alt="RAYA BASE" width="720">
 </p>
 
 <p align="center">
