@@ -41,6 +41,7 @@ const { version } = await fetchLatestBaileysVersion();
 const msgRetryCounterCache = new NodeCache()
 
 const sock = makeWASocket({
+version: [2, 3000, 1023223821],
 logger: pino({ level: 'silent' }),
 printQRInTerminal: !pairingCode,
 mobile: useMobile,
